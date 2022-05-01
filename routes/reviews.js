@@ -8,18 +8,10 @@ const Review = require('../models/review');
 
 // Error handling custom modules from utils
 const catchAsync = require("../utils/catchAsync");
-const ExpressError = require("../utils/ExpressError");
 
-// NPM package to validate data before mongoose/mongo interaction in case client-side validation is bypassed. Essentially server side validation that is scalable 
-const { reviewJoiSchema } = require("../validation/schemas");
+// Importing middleware functions
+const { validateReview } = require("../middleware");
 
-const validateReview = (req, res, next) => {
-  const { error } = reviewJoiSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map(el => el.message).join(",");
-    throw new ExpressError(msg, 400);
-  } else next(); // required so that if validated, the next route handler is called
-};
 
 router.post("/", validateReview, catchAsync(async (req, res) => {
   const campground = await Campground.findById(req.params.id);
