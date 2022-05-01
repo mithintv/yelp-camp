@@ -81,7 +81,6 @@ passport.deserializeUser(User.deserializeUser());
 
 // Passing in global variables for access in all templates like flash messages for routes if they exist
 app.use((req, res, next) => {
-    console.log(req.originalUrl);
     if (!["/login", "/"].includes(req.originalUrl)) {
         req.session.reqUrl = req.originalUrl;
     }
@@ -89,14 +88,6 @@ app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     next();
-});
-
-
-
-app.get("/fakeuser", async (req, res) => {
-    const user = new User({ email: "coltttt@gmail.com", username: "colttt" });
-    const newUser = await User.register(user, "chicken");
-    res.send(newUser);
 });
 
 // Using routes

@@ -13,10 +13,9 @@
                     </p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item text-muted">
-                        <%= campground.location%>
-                    </li>
+                    <li class="list-group-item text-muted"><%= campground.location%></li>
                     <li class="list-group-item">$<%= campground.price%>/night</li>
+                    <li class="list-group-item">Submitted by <%= campground.author.username%></li>
                 </ul>
                 <div class="card-body">
                     <a class="card-link btn btn-info" href="/campgrounds/<%=campground._id%>/edit">Edit</a>
@@ -30,6 +29,7 @@
             </div>
         </div>
         <div class="col-6">
+            <!-- Review form for individual campgrounds -->
             <h2>Leave a Review</h2>
             <form class="mb-3 needs-validation" action="/campgrounds/<%= campground._id %>/reviews" method="post"
                 novalidate>
@@ -44,6 +44,7 @@
                 </div>
                 <button class="btn btn-success">Submit</button>
             </form>
+            <!-- Edit & Delete buttons for individual reviews within a campground -->
             <% campground.reviews.forEach(element=> { %>
                 <div class="card mb-3">
                     <div class="card-body">
