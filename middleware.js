@@ -1,5 +1,6 @@
 // Custom modules for schemas via mongoose
 const Campground = require('./models/campground');
+const Review = require('./models/review');
 
 // NPM package to validate data before mongoose/mongo interaction in case client-side validation is bypassed. Essentially server side validation that is scalable 
 const { campgroundJoiSchema, reviewJoiSchema } = require("./validation/schemas");
@@ -18,6 +19,15 @@ module.exports.isLoggedIn = (req, res, next) => {
 module.exports.isAuthor = async (req, res, next) => {
   const campground = await Campground.findById(req.params.id);
   if (!campground.author.equals(req.user._id)) {
+    req.flash("error", "You are not authorized");
+    return res.redirect(`/campgrounds/${req.params.id}`);
+  }
+  next();
+};
+
+module.exports.isReviewAuthor = async (req, res, next) => {
+  const review = await Review.findById(req.params.reviewId);
+  if (!review.author.equals(req.user._id)) {
     req.flash("error", "You are not authorized");
     return res.redirect(`/campgrounds/${req.params.id}`);
   }
