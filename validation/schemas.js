@@ -17,7 +17,7 @@ module.exports.reviewJoiSchema = Joi.object({
   review: Joi.object({
     body: Joi.string().required(),
     rating: Joi.number()
-      .min(1)
+      .min(0)
       .max(5)
       .required()
   }).required()
