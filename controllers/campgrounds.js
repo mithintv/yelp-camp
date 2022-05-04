@@ -1,6 +1,12 @@
 // Custom modules for schemas via mongoose
 const Campground = require('../models/campground');
+
+// Importing cloudinary access for image upload and deletion
 const { cloudinary } = require("../cloudinary");
+
+// Importing mapbox access for geocoding
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const geocodingClient = mbxGeocoding({ accessToken: process.env.MAPBOX_PUBLIC_TOKEN });
 
 // Index Route
 module.exports.index = async (req, res) => {
@@ -15,7 +21,12 @@ module.exports.new = (req, res) => {
 
 // Create Route
 module.exports.create = async (req, res) => {
+    const geoData = await geocodingClient.forwardGeocode({
+        query: req.body.campground.location,
+        limit: 1
+    }).send();
     const campground = new Campground(req.body.campground);
+    campground.geometry = geoData.body.features[0].geometry;
     campground.images = req.files.map(file => ({
         url: file.path,
         filename: file.filename

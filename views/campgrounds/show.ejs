@@ -56,8 +56,9 @@
                         </div>
             </div>
         </div>
+        <div id='map' style='width: 450px; height: 300px;'></div>
+        <!-- Review form for individual campgrounds -->
         <div class="col-6">
-            <!-- Review form for individual campgrounds -->
             <% if (currentUser) { %>
                 <h2>Leave a Review</h2>
                 <form class="mb-3 needs-validation" action="/campgrounds/<%= campground._id %>/reviews" method="post"
@@ -116,4 +117,10 @@
 
                         <% }) %>
         </div>
+        <%- %>
     </div>
+    <script>
+        const token = "<%= process.env.MAPBOX_PUBLIC_TOKEN %>";
+        const campground = <%- JSON.stringify(campground) %>;
+    </script>
+    <script src="/scripts/showMap.js"></script>
