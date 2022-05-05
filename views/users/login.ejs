@@ -1,17 +1,26 @@
 <% layout("layouts/boilerplate") %>
-  <div class="container col-6">
-    <h1>Login</h1>
-    <form action="/login" method="POST" class="needs-validation" novalidate>
-      <div class="mb-3">
-        <label class="form-label" for="username">Username</label>
-        <input class="form-control" type="text" id="username" name="username" required autofocus> 
-        <div class="valid-feedback">Looks good!</div>
+  <div class="container col-xl-5 col-6 mb-5">
+    <div class="card shadow">
+      <img
+        src="https://images.unsplash.com/photo-1571863533956-01c88e79957e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
+        alt="" class="card-img-top" />
+      <div class="card-body">
+        <h3 class="card-title">Login</h3>
+        <form action="/login" method="POST" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label class="form-label" for="username">Username</label>
+            <input class="form-control" type="text" id="username" name="username" required autofocus>
+            <div class="valid-feedback">Looks good!</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="password">Password</label>
+            <input class="form-control" type="password" id="password" name="password" required>
+            <div class="valid-feedback">Looks good!</div>
+          </div>
+          <div class="d-grid">
+            <button class="btn btn-success">Login</button>
+          </div>
+        </form>
       </div>
-      <div class="mb-3">
-        <label class="form-label" for="password">Password</label>
-        <input class="form-control" type="password" id="password" name="password" required>
-        <div class="valid-feedback">Looks good!</div>
-      </div>
-      <button class="btn btn-success">Login</button>
-    </form>
+    </div>
   </div>
