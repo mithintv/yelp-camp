@@ -10,9 +10,9 @@
         <title>YelpCamp</title>
     </head>
 
-    <body class="d-flex flex-column container text-white bg-dark">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
+    <body class="d-flex flex-column text-white bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container container-fluid">
                 <a class="navbar-brand flex-grow-1">
                     YelpCamp
                 </a>
@@ -22,13 +22,13 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ms-auto">
-                        <a href="/" class="nav-link active">Home</a>
-                        <a href="/campgrounds" class="nav-link">Campgrounds</a>
+                        <a href="/" class="nav-link active px-0">Home</a>
+                        <a href="/campgrounds" class="nav-link px-0">Campgrounds</a>
                         <% if (!currentUser) { %>
-                            <a href="/login" class="nav-link">Login</a>
-                            <a href="/register" class="nav-link">Register</a>
+                            <a href="/login" class="nav-link px-0">Login</a>
+                            <a href="/register" class="nav-link px-0">Register</a>
                             <% } else { %>
-                                <a href="/logout" class="nav-link">Logout</a>
+                                <a href="/logout" class="nav-link px-0">Logout</a>
                                 <% } %>
 
                     </div>
@@ -40,12 +40,11 @@
         <main class="my-auto px-3 text-center mt-auto">
             <h1>YelpCamp</h1>
             <p class="lead">Welcome to YelpCamp! <br>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto, inventore. Quidem ratione illo
-                vitae
-                quam cum iure ipsa. Reprehenderit dolor autem ratione nam repellat quo dolorem blanditiis aliquam
-                expedita ab.
+                Jump right in and explore our many campgrounds. <br>
+                Feel free to share some of your own and comment on others!
             </p>
-            <a class="btn btn-lg btn-secondary font-weight-bold" href="/campgrounds">View Campgrounds</a>
+            <a class="btn btn-lg btn-light font-weight-bold" href="/campgrounds">View
+                Campgrounds</a>
         </main>
 
         <footer class="text-center text-white-50">
