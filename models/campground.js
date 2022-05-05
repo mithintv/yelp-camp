@@ -38,6 +38,14 @@ const campgroundSchema = new Schema({
             ref: "Review"
         }
     ]
+},
+    {
+        toJSON: { virtuals: true } // required to include virtuals when converting a document into JSON or geoJSON 
+    });
+
+
+campgroundSchema.virtual("properties.popupHtml").get(function () {
+    return `<a href="/campgrounds/${this._id}">${this.title}</a><br><p>${this.location}</p>`;
 });
 
 campgroundSchema.post("findOneAndDelete", async (doc) => {

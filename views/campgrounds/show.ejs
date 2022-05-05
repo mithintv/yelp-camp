@@ -121,6 +121,8 @@
     </div>
     <script>
         const token = "<%= process.env.MAPBOX_PUBLIC_TOKEN %>";
+        /* beautify preserve:start */
         const campground = <%- JSON.stringify(campground) %>;
+        /* beautify preserve:end */ 
     </script>
     <script src="/scripts/showMap.js"></script>
