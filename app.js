@@ -25,8 +25,9 @@ const campgroundRoutes = require("./routes/campgrounds");
 const reviewRoutes = require("./routes/reviews");
 const userRoutes = require("./routes/users");
 
-// Initializing Express Sessions
+// Initializing Express Sessions with Mongo
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 
 // Initializing Flash for flashing temporary messages
 const flash = require("connect-flash");
@@ -40,7 +41,12 @@ const User = require("./models/user");
 const helmet = require("helmet");
 
 // Connecting to MongoDB via Mongoose ODM
-mongoose.connect('mongodb://localhost:27017/yelp-camp', {
+let dbUrl = process.env.DB_URL;
+if (process.env.NODE_ENV !== "production") {
+    dbUrl = 'mongodb://localhost:27017/yelp-camp';
+}
+
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -70,6 +76,13 @@ app.use(mongoSanitize());
 const sessionConfig = {
     name: "yelp-camp-session",
     secret: process.env.EXPRESS_SESSION_SECRET,
+    store: MongoStore.create({
+        mongoUrl: dbUrl,
+        secret: process.env.EXPRESS_SESSION_SECRET,
+        touchAfter: 24 * 3600
+    }).on("error", (e) => {
+        console.log("SESSION STORE ERROR", e);
+    }),
     resave: false,
     saveUninitialized: true,
     cookie: {
