@@ -5,11 +5,16 @@
         src="https://images.unsplash.com/photo-1571863533956-01c88e79957e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
         alt="" class="card-img-top" />
       <div class="card-body">
-        <h3 class="card-title">Login</h3>
-        <form action="/login" method="POST" class="needs-validation" novalidate>
+        <h3 class="card-title">Register</h3>
+        <form action="/.netlify/functions/app/register" method="POST" class="needs-validation" novalidate>
           <div class="mb-3">
             <label class="form-label" for="username">Username</label>
             <input class="form-control" type="text" id="username" name="username" required autofocus>
+            <div class="valid-feedback">Looks good!</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="email">Email</label>
+            <input class="form-control" type="email" id="email" name="email" required>
             <div class="valid-feedback">Looks good!</div>
           </div>
           <div class="mb-3">
@@ -18,7 +23,7 @@
             <div class="valid-feedback">Looks good!</div>
           </div>
           <div class="d-grid">
-            <button class="btn btn-success">Login</button>
+            <button class="btn btn-success">Register</button>
           </div>
         </form>
       </div>

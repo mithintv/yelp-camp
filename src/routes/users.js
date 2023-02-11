@@ -11,6 +11,8 @@ const catchAsync = require("../utils/catchAsync");
 // Controller functions
 const users = require("../controllers/users");
 
+const { domain } = require('../constants');
+
 // All user routes
 router.route("/register")
   .get(users.renderRegisterForm)
@@ -21,7 +23,7 @@ router.route("/login")
   .post(passport.authenticate("local",
     {
       failureFlash: true,
-      failureRedirect: "/login"
+      failureRedirect: `${domain}/login`
     }),
     users.login);
 

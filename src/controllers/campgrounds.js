@@ -8,6 +8,8 @@ const { cloudinary } = require("../cloudinary");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const geocodingClient = mbxGeocoding({ accessToken: process.env.MAPBOX_PUBLIC_TOKEN });
 
+const { domain } = require('./../constants');
+
 // Index Route
 module.exports.index = async (req, res) => {
     const campgrounds = await Campground.find({});
@@ -33,9 +35,8 @@ module.exports.create = async (req, res) => {
     }));
     campground.author = req.user._id;
     await campground.save();
-    console.log(campground);
     req.flash("success", "Succesfully made a new campground!");
-    res.redirect(`/campgrounds/${campground._id}`);
+    res.redirect(`${domain}/campgrounds/${campground._id}`);
 };
 
 // Show Route
@@ -48,7 +49,7 @@ module.exports.show = async (req, res,) => {
     });
     if (!campground) {
         req.flash("error", "Cannot find that campground!");
-        return res.redirect("/campgrounds");
+        return res.redirect(`${domain}/campgrounds`);
     }
     res.render('campgrounds/show', { campground });
 };
@@ -65,7 +66,6 @@ module.exports.edit = async (req, res) => {
 
 // Update Route
 module.exports.update = async (req, res) => {
-    console.log(req.body);
     const campground = await Campground.findByIdAndUpdate(req.params.id, { ...req.body.campground });
     const addImageArray = req.files.map(file => ({ url: file.path, filename: file.filename }));
     campground.images.push(...addImageArray);
@@ -77,12 +77,12 @@ module.exports.update = async (req, res) => {
         await campground.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } });
     }
     req.flash("success", "Successfully updated campground!");
-    res.redirect(`/campgrounds/${campground._id}`);
+    res.redirect(`${domain}/campgrounds/${campground._id}`);
 };
 
 // Delete Route
 module.exports.delete = async (req, res) => {
     await Campground.findByIdAndDelete(req.params.id);
     req.flash("success", "Successfully deleted campground!");
-    res.redirect('/campgrounds');
+    res.redirect(`${domain}/campgrounds`);
 };

@@ -1,3 +1,5 @@
+
+
 // Initializing Express and Express Router
 const express = require("express");
 const router = express.Router();
@@ -17,7 +19,6 @@ const { storage } = require("../cloudinary");
 // Importing and initializing multer which parses form data for enctype="multipart/form-data"
 const multer = require("multer");
 const upload = multer({ storage });
-
 
 // All campground routes
 router.route("/")

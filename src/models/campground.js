@@ -1,3 +1,5 @@
+const { domain } = require('../constants');
+
 const mongoose = require('mongoose');
 const Review = require('./review');
 const Schema = mongoose.Schema;
@@ -40,12 +42,12 @@ const campgroundSchema = new Schema({
     ]
 },
     {
-        toJSON: { virtuals: true } // required to include virtuals when converting a document into JSON or geoJSON 
+        toJSON: { virtuals: true } // required to include virtuals when converting a document into JSON or geoJSON
     });
 
 
 campgroundSchema.virtual("properties.popupHtml").get(function () {
-    return `<a href="/campgrounds/${this._id}">${this.title}</a><br><p>${this.location}</p>`;
+    return `<img src="${this.images[0].url}"/> <a href="${domain}/campgrounds/${this._id}">${this.title}</a><p>${this.location}</p><p>$${this.price}/night</p>`;
 });
 
 campgroundSchema.post("findOneAndDelete", async (doc) => {

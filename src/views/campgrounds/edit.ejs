@@ -2,8 +2,8 @@
     <div class="row">
         <h1 class="text-center">Edit Campground</h1>
         <div class="col-md-6 offset-3">
-            <form class="needs-validation" action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST"
-                novalidate enctype="multipart/form-data">
+            <form class="needs-validation" action="/.netlify/functions/app/campgrounds/<%=campground._id%>?_method=PUT"
+                method="POST" novalidate enctype="multipart/form-data">
                 <div class="mb-3">
                     <label class="form-label" for="title">Title</label>
                     <input class="form-control" type="text" id="title" name="campground[title]"

@@ -1,11 +1,13 @@
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
-
+const serverless = require('serverless-http');
+const { domain } = require('./constants');
 
 // Initializing Express and path
 const express = require('express');
 const path = require('path');
+const router = express.Router();
 
 // ODM package to interact with MongoDB
 const mongoose = require('mongoose');
@@ -71,6 +73,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize());
+
 
 // Using Express Sessions
 const sessionConfig = {
@@ -155,7 +158,7 @@ passport.deserializeUser(User.deserializeUser());
 
 // Passing in global variables for access in all templates like flash messages for routes if they exist
 app.use((req, res, next) => {
-    if (!["/login", "/"].includes(req.originalUrl)) {
+    if (![`${domain}/login`, domain].includes(req.originalUrl)) {
         req.session.reqUrl = req.originalUrl;
     }
     res.locals.currentUser = req.user;
@@ -165,28 +168,26 @@ app.use((req, res, next) => {
 });
 
 // Using routes
-app.use("/campgrounds", campgroundRoutes);
-app.use("/campgrounds/:id/reviews", reviewRoutes);
-app.use("/", userRoutes);
+app.use(`${domain}/campgrounds`, campgroundRoutes);
+app.use(`${domain}/campgrounds/:id/reviews`, reviewRoutes);
+app.use(domain, userRoutes);
+app.use(domain, router);
 
 // All other routes
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
     res.render('home');
 });
 
-app.all("*", (req, res, next) => {
+router.all("*", (req, res, next) => {
     next(new ExpressError("Page Not Found", 404));
 });
 
 // Error handler route
-app.use((err, req, res, next) => {
+router.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
     if (!err.message) err.message = "Oh no! Something went wrong!";
     res.status(statusCode).render("error", { err });
 });
 
-const port = process.env.PORT || 3000;
-
-app.listen(port, () => {
-    console.log(`Serving on port ${port}`);
-});
+module.exports = app;
+module.exports.handler = serverless(app);

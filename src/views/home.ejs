@@ -12,25 +12,28 @@
 
     <body class="d-flex flex-column text-white bg-dark">
         <nav class="navbar navbar-expand-lg navbar-dark">
-            <div class="container container-fluid">
-                <a class="navbar-brand flex-grow-1">
+            <div class="container-fluid">
+                <a href="/.netlify/functions/app" class="navbar-brand flex-grow-1">
                     YelpCamp
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav ms-auto">
-                        <a href="/" class="nav-link active px-0">Home</a>
-                        <a href="/campgrounds" class="nav-link px-0">Campgrounds</a>
-                        <% if (!currentUser) { %>
-                            <a href="/login" class="nav-link px-0">Login</a>
-                            <a href="/register" class="nav-link px-0">Register</a>
-                            <% } else { %>
-                                <a href="/logout" class="nav-link px-0">Logout</a>
-                                <% } %>
+                <div class="w-25 offcanvas offcanvas-end" id="navbarNavAltMarkup">
+                    <div class="offcanvas-body justify-content-end">
+                        <div class="navbar-nav justify-content-end">
+                            <a href="/.netlify/functions/app" class="nav-link px-0">Home</a>
+                            <a href="/.netlify/functions/app/campgrounds" class="nav-link px-0">Campgrounds</a>
+                            <% if (!currentUser) { %>
+                                <a href="/.netlify/functions/app/login" class="nav-link px-0">Login</a>
+                                <a href="/.netlify/functions/app/register" class="nav-link px-0">Register</a>
+                                <% } else { %>
+                                    <a href="/.netlify/functions/app/logout" class="nav-link px-0">Logout</a>
+                                    <% } %>
 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -43,7 +46,7 @@
                 Jump right in and explore our many campgrounds. <br>
                 Feel free to share some of your own and comment on others!
             </p>
-            <a class="btn btn-lg btn-light font-weight-bold" href="/campgrounds">View
+            <a class="btn btn-lg btn-light font-weight-bold" href="/.netlify/functions/app/campgrounds">View
                 Campgrounds</a>
         </main>
 
