@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "netlify-lambda build src",
     "start": "node local.js",
     "dev": "nodemon -e ejs,js,mjs,json,css local.js"
   },
