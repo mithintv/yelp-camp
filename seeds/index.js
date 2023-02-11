@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const cities = require('./cities');
-const { places, descriptors } = require('./seedHelpers');
+const { places, descriptors, images } = require('./seedHelpers');
 const Campground = require('../models/campground');
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp', {
@@ -24,6 +24,8 @@ const seedDB = async () => {
     for (let i = 0; i < 400; i++) {
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 20) + 10;
+        const img1 = sample(images);
+        const img2 = sample(images);
         const camp = new Campground({
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             geometry: {
@@ -36,17 +38,17 @@ const seedDB = async () => {
             title: `${sample(descriptors)} ${sample(places)}`,
             images: [
                 {
-                    url: 'https://res.cloudinary.com/dlhdt6yrw/image/upload/v1651589764/YelpCamp/ovr1yl4rg1yg1edroggz.jpg',
-                    filename: 'YelpCamp/ovr1yl4rg1yg1edroggz.jpg'
+                    url: img1,
+                    filename: img1.slice(63, img1.length)
                 },
                 {
-                    url: 'https://res.cloudinary.com/dlhdt6yrw/image/upload/v1651545742/YelpCamp/zircrxaiikkt9tewu74y.jpg',
-                    filename: 'YelpCamp/zircrxaiikkt9tewu74y'
-                }
+                    url: img2,
+                    filename: img2.slice(63, img1.length)
+                },
             ],
             description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam dolores vero perferendis laudantium, consequuntur voluptatibus nulla architecto, sit soluta esse iure sed labore ipsam a cum nihil atque molestiae deserunt!',
             price: price,
-            author: "626a97326f88534e0800625d"
+            author: "63e6f2038174fb7670ed2138"
         });
         await camp.save();
     }

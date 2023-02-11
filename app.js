@@ -137,7 +137,7 @@ app.use(
                 "'self'",
                 "blob:",
                 "data:",
-                "https://res.cloudinary.com/dlhdt6yrw/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
+                "https://res.cloudinary.com/dlhdt6yrw/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT!
                 "https://images.unsplash.com/",
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
