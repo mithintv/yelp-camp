@@ -1,7 +1,6 @@
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
-const serverless = require('serverless-http');
 const { domain } = require('./constants');
 
 // Initializing Express and path
@@ -190,4 +189,3 @@ router.use((err, req, res, next) => {
 });
 
 module.exports = app;
-module.exports.handler = serverless(app);
