@@ -11,7 +11,7 @@
   "author": "Mithin",
   "license": "ISC",
   "dependencies": {
-    "@mapbox/mapbox-sdk": "^0.13.3",
+    "@mapbox/mapbox-sdk": "^0.13.7",
     "cloudinary": "^1.29.1",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^4.6.0",
