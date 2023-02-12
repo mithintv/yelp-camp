@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node local.js",
-    "dev": "nodemon -e ejs,js,mjs,json,css local.js"
+    "start": "node app.js",
+    "dev": "nodemon -e ejs,js,mjs,json,css app.js"
   },
   "keywords": [],
   "author": "Mithin",

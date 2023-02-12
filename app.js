@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
-const { domain } = require('./constants');
+const { domain } = require('./src/constants');
 
 // Initializing Express and path
 const express = require('express');
@@ -16,15 +16,15 @@ const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 
 // Error handling custom modules from utils
-const ExpressError = require("./utils/ExpressError");
+const ExpressError = require("./src/utils/ExpressError");
 
 // Package to prevent mongo injections
 const mongoSanitize = require('express-mongo-sanitize');
 
 // Requiring routes
-const campgroundRoutes = require("./routes/campgrounds");
-const reviewRoutes = require("./routes/reviews");
-const userRoutes = require("./routes/users");
+const campgroundRoutes = require("./src/routes/campgrounds");
+const reviewRoutes = require("./src/routes/reviews");
+const userRoutes = require("./src/routes/users");
 
 // Initializing Express Sessions with Mongo
 const session = require("express-session");
@@ -36,7 +36,7 @@ const flash = require("connect-flash");
 // Authentication npm package initialization and importing User mongoose model
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-const User = require("./models/user");
+const User = require("./src/models/user");
 
 // Express.js security with HTTP headers
 const helmet = require("helmet");
@@ -47,18 +47,27 @@ if (process.env.NODE_ENV !== "production") {
     dbUrl = 'mongodb://localhost:27017/yelp-camp';
 }
 
-mongoose.connect(dbUrl, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false
-});
+const connectDB = async () => {
+    try {
+        const conn = await mongoose.connect(dbUrl, {
+            useNewUrlParser: true,
+            useCreateIndex: true,
+            useUnifiedTopology: true,
+            useFindAndModify: false
+        });
+        console.log(`MongoDB Connected: ${conn.connection.host}`);
+    } catch (error) {
+        console.log(error);
+        process.exit(1);
+    }
+};
 
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-    console.log("Database connected");
-});
+
+// const db = mongoose.connection;
+// db.on("error", console.error.bind(console, "connection error:"));
+// db.once("open", () => {
+//     console.log("Database connected");
+// });
 
 
 // Express specific options and settings
@@ -66,11 +75,11 @@ const app = express();
 
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'src/views'));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "src/public")));
 app.use(mongoSanitize());
 
 
@@ -188,4 +197,10 @@ router.use((err, req, res, next) => {
     res.status(statusCode).render("error", { err });
 });
 
-module.exports = app;
+const port = process.env.PORT || 3000;
+
+connectDB().then(() => {
+    app.listen(port, () => {
+        console.log(`Listening on port ${port}`);
+    });
+});
